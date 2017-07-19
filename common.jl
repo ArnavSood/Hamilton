@@ -14,7 +14,7 @@ type TwilioUser
   contentType::String
 end
 
-me = TwilioUser("AC4777bd99b1493009cf9f6be876f6ac62", "$authtoken", "+16099778034", "+14159805412", "https://$accountSID:$authtoken@api.twilio.com/2010-04-01", "/Accounts/$accountSID/Messages.json", contentType = "application/x-www-form-urlencoded")
+me = TwilioUser("AC4777bd99b1493009cf9f6be876f6ac62", "$authtoken", "+16099778034", "+14159805412", "https://AC4777bd99b1493009cf9f6be876f6ac62:$authtoken@api.twilio.com/2010-04-01", "/Accounts/AC4777bd99b1493009cf9f6be876f6ac62/Messages.json", contentType = "application/x-www-form-urlencoded")
 
 # Function.
 function sendMessage(body, me::TwilioUser)
