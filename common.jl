@@ -10,13 +10,11 @@ type TwilioUser
   twilNum::String
 end
 
-accountSID = "AC4777bd99b1493009cf9f6be876f6ac62"
-authToken = "$apikey"
-twilNum = "+14159805412"
 baseURL = "https://$accountSID:$authToken@api.twilio.com/2010-04-01"
 endpoint = "/Accounts/$accountSID/Messages.json"
 contentType = "application/x-www-form-urlencoded"
 
+# Create user object.
 me = TwilioUser(accountSID, authToken, twilNum)
 
 # Function
