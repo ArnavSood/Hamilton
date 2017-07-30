@@ -3,27 +3,27 @@ using Requests
 using JSON
 include("apikey.jl")
 
-# Primitives.
+# Create user object.
 type TwilioUser
   accountSID::String
   authToken::String
   twilNum::String
 end
 
-# Create user object.
 me = TwilioUser(accountSID, authToken, twilNum)
-
-# Format request params.
-baseURL = "https://$accountSID:$authToken@api.twilio.com/2010-04-01"
-endpoint = "/Accounts/$accountSID/Messages.json"
-contentType = "application/x-www-form-urlencoded"
 
 # Function
 function sendMessage(body::String, sender::TwilioUser, target::String)
   twilNum = sender.twilNum
+  account = sender.accountSID
+  auth = sender.authToken
+
+  address = "https://$(account):$(auth)@api.twilio.com/2010-04-01" * "/Accounts/$(account)/Messages.json"
+  contentType = "application/x-www-form-urlencoded"
+
 
   # Create request.
   params = Dict("To" => target, "From" => twilNum, "Body" => body, "Content-Type" => contentType)
-  resp = post("$baseURL$endpoint"; data = params)
+  resp = post(address; data = params)
   return JSON.parse(readstring(resp))
 end
