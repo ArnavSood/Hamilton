@@ -10,21 +10,20 @@ type TwilioUser
   twilNum::String
 end
 
+# Create user object.
+me = TwilioUser(accountSID, authToken, twilNum)
+
+# Format request params.
 baseURL = "https://$accountSID:$authToken@api.twilio.com/2010-04-01"
 endpoint = "/Accounts/$accountSID/Messages.json"
 contentType = "application/x-www-form-urlencoded"
 
-# Create user object.
-me = TwilioUser(accountSID, authToken, twilNum)
-
 # Function
-function sendMessage(body::String, me::TwilioUser, number::String)
-  accountSID = me.accountSID
-  authToken = me.authToken
-  twilNum = me.twilNum
+function sendMessage(body::String, sender::TwilioUser, target::String)
+  twilNum = sender.twilNum
 
   # Create request.
-  params = Dict("To" => number, "From" => twilNum, "Body" => body, "Content-Type" => contentType)
+  params = Dict("To" => target, "From" => twilNum, "Body" => body, "Content-Type" => contentType)
   resp = post("$baseURL$endpoint"; data = params)
   return JSON.parse(readstring(resp))
 end
