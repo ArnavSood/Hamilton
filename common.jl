@@ -1,7 +1,7 @@
 # Deps.
 using Requests
 using JSON
-include("apikey.jl")
+include("authdata.jl")
 
 # Create user object.
 type TwilioUser
@@ -10,7 +10,7 @@ type TwilioUser
   twilNum::String
 end
 
-me = TwilioUser(accountSID, authToken, twilNum)
+me = TwilioUser(accountSID, apikey, twilNum)
 
 # Function
 function sendMessage(body::String, sender::TwilioUser, target::String)
@@ -18,9 +18,9 @@ function sendMessage(body::String, sender::TwilioUser, target::String)
   account = sender.accountSID
   auth = sender.authToken
 
+  # Format address.
   address = "https://$(account):$(auth)@api.twilio.com/2010-04-01" * "/Accounts/$(account)/Messages.json"
   contentType = "application/x-www-form-urlencoded"
-
 
   # Create request.
   params = Dict("To" => target, "From" => twilNum, "Body" => body, "Content-Type" => contentType)
