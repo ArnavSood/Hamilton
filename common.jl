@@ -12,7 +12,7 @@ end
 
 me = TwilioUser(accountSID, apikey, twilNum)
 
-# Function
+# Messaging function.
 function sendMessage(body::String, sender::TwilioUser, target::String)
   twilNum = sender.twilNum
   account = sender.accountSID
